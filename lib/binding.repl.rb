@@ -24,12 +24,12 @@ klass = Class.new do
   end
 
 private
-  def safe_require(file, already_loaded)
+  def safe_require(lib, already_loaded)
     unless already_loaded
-      require file
+      require(lib)
     end
   rescue LoadError => e
-    warn "the file '#{file}' could not be loaded."
+    raise e, "the ruby console '#{lib}' could not be loaded."
   end
 end
 
