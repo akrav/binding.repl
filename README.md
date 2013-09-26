@@ -43,6 +43,48 @@ class BlogsController < ActionController::Base
 end
 ```
 
+__NOTES__
+
+_CAVAETS_
+
+Ripl and Pry can be customized by passing a set of key-value pairs but
+IRB cannot. ripl can be invoked with options that are forwarded to
+`Ripl.start(…)`:  
+
+```ruby
+class Foo
+  binding.repl.ripl riplrc: false
+end
+```
+
+Pry can be configured in the same way. options are forwarded to `Pry.start(…)`:
+
+```ruby
+class Foo
+  binding.repl.pry quiet: true
+end
+```
+
+I have only used Ripl once(to write this library) and I don't use IRB
+much anymore. If I can improve support for either please let me know
+via an issue or pull request/e-note.
+
+
+_DEPENDENCIES_
+
+binding.repl doesn't depend on anything. it's up to you to meet the 
+dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}` 
+will try to load the appropiate console for you if it looks like it 
+hasn't been loaded yet.
+
+__INSTALL__
+
+ruby 1.9+ only.
+
+```
+gem install binding.repl
+```
+
 __CREDIT__
 
 - [banisterfiend](https://github.com/banister) (John Mair)  
