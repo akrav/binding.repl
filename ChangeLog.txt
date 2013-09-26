@@ -1,3 +1,6 @@
+== v0.1.1.1
+   - doc improvements
+
 == v0.1.1
    - remove top level constant "BindingMixin" by using const_set
      on anonymous class.

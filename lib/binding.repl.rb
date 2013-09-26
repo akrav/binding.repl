@@ -6,7 +6,7 @@ klass = Class.new do
   }
 
   def self.version
-    "0.1.1"
+    "0.1.1.1"
   end
 
   def initialize(binding)
