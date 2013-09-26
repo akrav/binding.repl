@@ -2,7 +2,6 @@
 |:----------------|:--------------------------------------------------
 | Homepage        | https://github.com/robgleeson/binding.repl
 | Documentation   | http://rubydoc.info/github/robgleeson/binding.repl
-| Metrics         | [![Code Climate](https://codeclimate.com/github/robgleeson/binding.repl.png)](https://codeclimate.com/github/robgleeson/binding.repl)
 | CI              | [![Build Status](https://travis-ci.org/robgleeson/ichannel.binding.repl.png)](https://travis-ci.org/robgleeson/binding.repl)
 | Author          | Robert Gleeson
 
@@ -34,6 +33,13 @@ class Foo
   binding.repl.pry   # invoke pry in context of "Foo"
   binding.repl.ripl  # invoke ripl in context of "Foo"
   binding.repl.irb   # invoke irb in context of "Foo"
+end
+
+class BlogsController < ActionController::Base
+  def index
+    @blog = Blog.find(params[:id])
+    binding.repl.{pry,irb,ripl}
+  end
 end
 ```
 

@@ -1,5 +1,5 @@
 klass = Class.new do
-  module Mixin
+  module BindingMixin
     def repl
       Binding.repl.new(self)
     end
@@ -23,23 +23,36 @@ klass = Class.new do
     Ripl.start options.merge(:binding => @binding)
   end
 
+  def irb(options = nil)
+    # Insane API, but here it is (IRB.start() doesn't take binding).
+    safe_require "irb", defined?(IRB)
+    IRB.setup(nil)
+    irb = IRB::Irb.new IRB::WorkSpace.new(@binding)
+    IRB.conf[:IRB_RC].call(irb.context) if IRB.conf[:IRB_RC]
+    IRB.conf[:MAIN_CONTEXT] = irb.context
+    trap("SIGINT") do
+      irb.signal_handle
+    end
+    catch(:IRB_EXIT) do
+      irb.eval_input
+    end
+  end
+
 private
   def safe_require(lib, already_loaded)
     unless already_loaded
       require(lib)
     end
   rescue LoadError => e
-    raise e, "the ruby console '#{lib}' could not be loaded."
+    raise e, "the ruby console '#{lib}' could not be loaded. is '#{lib}' installed?"
   end
 end
 
 Binding.class_exec(klass) do |klass|
   define_singleton_method(:repl) do
+    # I can't figure out a good name for this class yet.
+    # return an anonymous class (for now).
     klass
   end
-  include Binding.repl::Mixin
-end
-
-class Foo
-  binding.repl.pry
+  include Binding.repl::BindingMixin
 end
