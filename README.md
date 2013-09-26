@@ -35,8 +35,8 @@ class Foo
   binding.repl.irb   # invoke irb in context of "Foo"
 end
 
-class BlogsController < ActionController::Base
-  def index
+class BlogsController < ApplicationController
+  def show
     @blog = Blog.find(params[:id])
     binding.repl.{pry,irb,ripl}
   end
