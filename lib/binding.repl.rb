@@ -49,10 +49,6 @@ private
 end
 
 Binding.class_exec(klass) do |klass|
-  define_singleton_method(:repl) do
-    # I can't figure out a good name for this class yet.
-    # return an anonymous class (for now).
-    klass
-  end
+  define_singleton_method(:repl) { klass }
   include Binding.repl::BindingMixin
 end
