@@ -48,7 +48,7 @@ private
   end
 end
 
-Binding.class_exec(klass) do |klass|
+Binding.class_eval do
   define_singleton_method(:repl) { klass }
   include Binding.repl::BindingMixin
 end
