@@ -1,12 +1,12 @@
 klass = Class.new do
-  module BindingMixin
+  self.const_set :BindingMixin, Module.new {
     def repl
       Binding.repl.new(self)
     end
-  end
+  }
 
   def self.version
-    "0.1.0"
+    "0.1.1"
   end
 
   def initialize(binding)
