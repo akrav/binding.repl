@@ -12,7 +12,7 @@ __binding.repl__ can start a number of different ruby consoles at runtime.
 IRB, ripl, and Pry(of course!) can be invoked at runtime in any context
 that an instance of `Binding` closes over.
 
-I owe all credit to John Mair([banisterfiend](https://github.com/banister),
+I owe all credit to John Mair([banisterfiend](https://github.com/banister)),
 the creator of Pry, for seeing the potential in a console that can be
 started at runtime and bound to the context of a `Binding`. I don't
 think a single ruby console has put as much emphasize on a console
@@ -39,10 +39,10 @@ end
 
 __CREDIT__
 
-- [banisterfiend](https://github.com/banister) (John Mair)
+- [banisterfiend](https://github.com/banister) (John Mair)  
   for pry
 
-- [Kyrylo](https://github.com/kyrylo) (Kyrylo Silin)
+- [Kyrylo](https://github.com/kyrylo) (Kyrylo Silin)  
   for his hard work on pry.
 
 Rest of the Pry team(!!):
