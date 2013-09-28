@@ -1,7 +1,11 @@
 klass = Class.new do
-  self.const_set :BindingMixin, Module.new {
+  const_set :BindingMixin, Module.new {
     def repl
       Binding.repl.new(self)
+    end
+
+    def repl!
+      Binding.repl.new(self).automatic!
     end
   }
 
@@ -9,8 +13,28 @@ klass = Class.new do
     "0.1.1.1"
   end
 
+  def self.automatic_load_order=(order)
+    @automatic_load_order = order
+  end
+
+  def self.automatic_load_order
+    @automatic_load_order
+  end
+
   def initialize(binding)
     @binding = binding
+  end
+
+  def automatic!(options = {})
+    Binding.repl.automatic_load_order.each do |repl|
+      begin
+        public_send(repl, options)
+      rescue LoadError => e
+        warn e.message
+      else
+        return true # we found a REPL, quit.
+      end
+    end
   end
 
   def pry(options = {})
@@ -51,4 +75,5 @@ end
 Binding.class_eval do
   define_singleton_method(:repl) { klass }
   include Binding.repl::BindingMixin
+  repl.automatic_load_order = %w(ripl pry irb)
 end
