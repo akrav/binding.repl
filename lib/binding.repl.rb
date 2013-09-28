@@ -5,6 +5,12 @@ klass = Class.new do
     end
   }
 
+  const_set :ErrType, [
+    :'binding.repl.console_not_implemented',
+    :'binding.repl.load_error',
+    :'binding.repl.undefined'
+  ]
+
   def self.version
     "0.1.1.1"
   end
@@ -47,17 +53,16 @@ klass = Class.new do
   end
 
   def auto
-    load_order = Binding.repl.automatic_load_order
-    load_order.each.with_index do |repl, index|
-      begin
-        public_send(repl)
-      rescue NoMethodError, LoadError => e
-        if index+1 == load_order.size
-          raise LoadError, "no ruby consoles found (looked for #{load_order.join(", ")})"
-        end
-      else
-        return true
-      end
+    consoles = Binding.repl.automatic_load_order
+    exit_value = :'binding.repl.undefined'
+    consoles.detect do |console|
+      exit_value = auto_require(console)
+      exit_value != :'binding.repl.load_error'
+    end
+    if ERR_TYPES.include?(exit_value)
+      raise LoadError, "no ruby consoles found (looked for #{consoles.join(", ")})"
+    else
+      exit_value
     end
   end
 
@@ -68,6 +73,16 @@ private
     end
   rescue LoadError => e
     raise e, "the ruby console '#{lib}' could not be loaded. is '#{lib}' installed?"
+  end
+
+  def auto_require(console)
+    exit_value = public_send(console)
+  rescue NoMethodError
+    :'binding.repl.console_not_implemented'
+  rescue LoadError
+    :'binding.repl.load_error'
+  else
+    exit_value
   end
 end
 
