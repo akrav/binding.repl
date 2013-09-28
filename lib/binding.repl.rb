@@ -9,6 +9,21 @@ klass = Class.new do
     "0.2.0"
   end
 
+  def self.lookup
+    return @lookup if @lookup
+    @lookup = {}
+    @lookup.default = [proc { true }, proc { :'binding.repl.unknown_console' }]
+    @lookup
+  end
+
+  def self.add(console, predicate, runner)
+    lookup[console] = [predicate, runner]
+    define_method(console) do |options = {}|
+      exit_value = invoke_console(console, options)
+      error?(exit_value) ? fail!(console) : exit_value
+    end
+  end
+
   def self.auto_load_order=(order)
     @auto_load_order = order
   end
@@ -19,27 +34,7 @@ klass = Class.new do
 
   def initialize(binding)
     @binding = binding
-    @lookup = {
-      ripl: [-> { defined?(Ripl) } , method(:invoke_ripl).to_proc ],
-      irb:  [-> { defined?(IRB) }  , method(:invoke_irb).to_proc  ],
-      pry:  [-> { defined?(Pry) }  , method(:invoke_pry).to_proc  ]
-    }
-    @lookup.default = [proc { true }, proc {:'binding.repl.unknown_console'}]
-  end
-
-  def pry(options = {})
-    exit_value = invoke_console :pry, options
-    error?(exit_value) ? fail!(:pry) : exit_value
-  end
-
-  def ripl(options = {})
-    exit_value = invoke_console :ripl, options
-    error?(exit_value) ? fail!(:ripl) : exit_value
-  end
-
-  def irb(options = {})
-    exit_value = invoke_console :irb, options
-    error?(exit_value) ? fail!(:irb) : exit_value
+    @lookup = Binding.repl.lookup
   end
 
   def auto
@@ -76,25 +71,6 @@ private
       IRB.setup(nil) if console == :irb
     end
   end
-
-  def invoke_pry(binding, options)
-    binding.public_send :pry, options
-  end
-
-  def invoke_ripl(binding, options)
-    Ripl.start options.merge(binding: binding)
-  end
-
-  def invoke_irb(binding, options)
-    irb = IRB::Irb.new IRB::WorkSpace.new(binding)
-    IRB.conf[:MAIN_CONTEXT] = irb.context
-    trap("SIGINT") do
-      irb.signal_handle
-    end
-    catch(:IRB_EXIT) do
-      irb.eval_input
-    end
-  end
 end
 
 Binding.class_eval do
@@ -102,3 +78,6 @@ Binding.class_eval do
   include Binding.repl::BindingMixin
   repl.auto_load_order = %w(ripl pry irb)
 end
+require_relative "binding.repl/pry"
+require_relative "binding.repl/irb"
+require_relative "binding.repl/ripl"
