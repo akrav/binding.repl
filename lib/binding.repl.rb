@@ -77,15 +77,15 @@ private
     end
   end
 
-  def invoke_pry(binding, options = {})
+  def invoke_pry(binding, options)
     binding.public_send :pry, options
   end
 
-  def invoke_ripl(binding, options = {})
+  def invoke_ripl(binding, options)
     Ripl.start options.merge(binding: binding)
   end
 
-  def invoke_irb(binding, options = {})
+  def invoke_irb(binding, options)
     irb = IRB::Irb.new IRB::WorkSpace.new(binding)
     IRB.conf[:MAIN_CONTEXT] = irb.context
     trap("SIGINT") do
