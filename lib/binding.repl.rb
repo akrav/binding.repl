@@ -37,7 +37,7 @@ klass = Class.new do
     error?(exit_value) ? fail!(:ripl) : exit_value
   end
 
-  def irb(options = nil)
+  def irb(options = {})
     exit_value = invoke_console :irb, options
     error?(exit_value) ? fail!(:irb) : exit_value
   end
@@ -69,7 +69,13 @@ private
   end
 
   def require_console(console, predicate)
-    require(console.to_s) unless predicate.call
+    # IRB hack.
+    already_required = predicate.call
+    if !already_required && console == :irb
+      require(console.to_s)
+      IRB.setup(nil)
+    end
+    require(console.to_s) unless already_required
   end
 
   def invoke_pry(binding, options = {})
@@ -80,11 +86,8 @@ private
     Ripl.start :binding => binding
   end
 
-  def invoke_irb(binding, options = nil)
-    # Insane API, but here it is (IRB.start() doesn't take binding).
-    IRB.setup(nil)
+  def invoke_irb(binding, options = {})
     irb = IRB::Irb.new IRB::WorkSpace.new(binding)
-    IRB.conf[:IRB_RC].call(irb.context) if IRB.conf[:IRB_RC]
     IRB.conf[:MAIN_CONTEXT] = irb.context
     trap("SIGINT") do
       irb.signal_handle
