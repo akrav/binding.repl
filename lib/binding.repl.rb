@@ -1,23 +1,28 @@
-klass = Class.new do
-  const_set :BindingMixin, Module.new {
+class BindingRepl
+  module BindingMixin
     def repl
       Binding.repl.new(self)
     end
-  }
+  end
+
+  LOOKUP = {}
+  LOOKUP.default = [proc { true }, proc { :'binding.repl.unknown_console' }]
+  private_constant :LOOKUP
+
+  def self.name
+    "binding.repl"
+  end
+
+  def self.inspect
+    name
+  end
 
   def self.version
     "0.2.0"
   end
 
-  def self.lookup
-    return @lookup if @lookup
-    @lookup = {}
-    @lookup.default = [proc { true }, proc { :'binding.repl.unknown_console' }]
-    @lookup
-  end
-
   def self.add(console, predicate, runner)
-    lookup[console] = [predicate, runner]
+    LOOKUP[console] = [predicate, runner]
     define_method(console) do |options = {}|
       exit_value = invoke_console(console, options)
       error?(exit_value) ? fail!(console) : exit_value
@@ -34,7 +39,7 @@ klass = Class.new do
 
   def initialize(binding)
     @binding = binding
-    @lookup = Binding.repl.lookup
+    @lookup = LOOKUP
   end
 
   def auto
@@ -73,6 +78,8 @@ private
   end
 end
 
+klass = BindingRepl
+Object.send :remove_const, :BindingRepl
 Binding.class_eval do
   define_singleton_method(:repl) { klass }
   include Binding.repl::BindingMixin
