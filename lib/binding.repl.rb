@@ -69,13 +69,12 @@ private
   end
 
   def require_console(console, predicate)
-    # IRB hack.
     already_required = predicate.call
-    if !already_required && console == :irb
+    if !already_required
       require(console.to_s)
-      IRB.setup(nil)
+      # IRB hack.
+      IRB.setup(nil) if console == :irb
     end
-    require(console.to_s) unless already_required
   end
 
   def invoke_pry(binding, options = {})
