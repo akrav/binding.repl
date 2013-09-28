@@ -63,7 +63,7 @@ private
   def invoke_console(console, options)
     require_predicate, runner = @lookup[console]
     require_console(console, require_predicate)
-    runner.call(options)
+    runner.call(@binding, options)
   rescue LoadError
     :'binding.repl.load_error'
   end
@@ -72,18 +72,18 @@ private
     require(console.to_s) unless predicate.call
   end
 
-  def invoke_pry(options = {})
-    @binding.pry(options)
+  def invoke_pry(binding, options = {})
+    binding.public_send :pry, options
   end
 
-  def invoke_ripl(options = {})
-    Ripl.start :binding => @binding
+  def invoke_ripl(binding, options = {})
+    Ripl.start :binding => binding
   end
 
-  def invoke_irb(options = nil)
+  def invoke_irb(binding, options = nil)
     # Insane API, but here it is (IRB.start() doesn't take binding).
     IRB.setup(nil)
-    irb = IRB::Irb.new IRB::WorkSpace.new(@binding)
+    irb = IRB::Irb.new IRB::WorkSpace.new(binding)
     IRB.conf[:IRB_RC].call(irb.context) if IRB.conf[:IRB_RC]
     IRB.conf[:MAIN_CONTEXT] = irb.context
     trap("SIGINT") do
