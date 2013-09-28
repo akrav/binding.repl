@@ -1,3 +1,7 @@
+== HEAD
+   - add binding.repl.auto
+   auto discover the first available console.
+
 == v0.1.1.1
    - doc improvements
 
