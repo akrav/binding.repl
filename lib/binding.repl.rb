@@ -3,10 +3,6 @@ klass = Class.new do
     def repl
       Binding.repl.new(self)
     end
-
-    def repl!
-      Binding.repl.new(self).automatic!
-    end
   }
 
   def self.version
