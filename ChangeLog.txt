@@ -1,3 +1,15 @@
+== v0.3.0
+   - add Binding.repl.add
+   add a ruby console to binding.repl
+
+   - add lib/binding.repl/{pry,irb,ripl}.rb
+   individual files for each console that use Binding.repl.add
+
+   - modularize design, cleanup internals
+   the anonymous class is gone because constant lookup rules are a
+   pain with anonymous classes. The class we create is available at
+   Binding.repl and nowhere else, though.
+
 == v0.2.0
    - call IRB.setup() once
    fixes #4

@@ -18,7 +18,7 @@ class BindingRepl
   end
 
   def self.version
-    "0.2.0"
+    "0.3.0"
   end
 
   def self.add(console, predicate, runner)
