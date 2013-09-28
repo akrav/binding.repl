@@ -5,7 +5,7 @@ klass = Class.new do
     end
   }
 
-  const_set :ErrType, [
+  const_set :ERR_TYPES, [
     :'binding.repl.console_not_implemented',
     :'binding.repl.load_error',
     :'binding.repl.undefined'
@@ -53,13 +53,13 @@ klass = Class.new do
   end
 
   def auto
-    consoles = Binding.repl.automatic_load_order
+    consoles, err_types = Binding.repl.automatic_load_order, Binding.repl::ERR_TYPES
     exit_value = :'binding.repl.undefined'
     consoles.detect do |console|
       exit_value = auto_require(console)
-      ERR_TYPES.exclude?(exit_value)
+      !err_types.include?(exit_value)
     end
-    if ERR_TYPES.include?(exit_value)
+    if err_types.include?(exit_value)
       raise LoadError, "no ruby consoles found (looked for #{consoles.join(", ")})"
     else
       exit_value
