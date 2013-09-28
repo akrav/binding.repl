@@ -50,17 +50,17 @@ klass = Class.new do
     end
   end
 
-  def auto(options = nil)
+  def auto
     load_order = Binding.repl.automatic_load_order
     load_order.each.with_index do |repl, index|
       begin
-        public_send(repl, options)
+        public_send(repl)
       rescue NoMethodError, LoadError => e
         if index+1 == load_order.size
           raise LoadError, "no ruby consoles found (looked for #{load_order.join(", ")})"
         end
       else
-        return true # we found a REPL, quit.
+        return true
       end
     end
   end
