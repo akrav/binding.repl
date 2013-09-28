@@ -24,6 +24,9 @@ klass = Class.new do
       irb:  [-> { defined?(IRB) }  , method(:invoke_irb).to_proc  ],
       pry:  [-> { defined?(Pry) }  , method(:invoke_pry).to_proc  ]
     }
+    @lookup.default_proc = proc do |h,k|
+      h[k] = [proc { true }, proc {:'binding.repl.load_error'}]
+    end
   end
 
   def pry(options = {})
@@ -59,9 +62,6 @@ private
   end
 
   def invoke_console(console, options)
-    unless @lookup.has_key?(console)
-      return :'binding.repl.console_not_implemented'
-    end
     require_predicate, runner = @lookup[console]
     require_console(console, require_predicate)
     runner.call(options)
