@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.version       = Binding.repl.version
   spec.authors       = ["Robert Gleeson"]
   spec.email         = ["rob@flowof.info"]
-  spec.description   = "binding.repl provides the same binding.pry interface to all ruby consoles"
-  spec.summary       = "binding.repl provides the same binding.pry interface to all ruby consoles"
-  spec.homepage      = ""
+  spec.description   = "binding.repl: binding.pry for all ruby consoles"
+  spec.summary       = spec.description
+  spec.homepage      = "https://github.com/robgleeson/binding.repl"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
