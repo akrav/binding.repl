@@ -82,7 +82,7 @@ klass = BindingRepl
 Object.send :remove_const, :BindingRepl
 Binding.class_eval do
   define_singleton_method(:repl) { klass }
-  include Binding.repl::BindingMixin
+  include klass::BindingMixin
   repl.auto_load_order = %w(ripl pry irb)
 end
 require_relative "binding.repl/pry"
