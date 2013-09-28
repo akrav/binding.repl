@@ -1,4 +1,4 @@
-== HEAD
+== v0.2.0
    - call IRB.setup() once
    fixes #4
 
