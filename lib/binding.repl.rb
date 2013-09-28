@@ -25,18 +25,6 @@ klass = Class.new do
     @binding = binding
   end
 
-  def automatic!(options = {})
-    Binding.repl.automatic_load_order.each do |repl|
-      begin
-        public_send(repl, options)
-      rescue LoadError => e
-        warn e.message
-      else
-        return true # we found a REPL, quit.
-      end
-    end
-  end
-
   def pry(options = {})
     safe_require "pry", defined?(Pry)
     @binding.pry options
@@ -59,6 +47,21 @@ klass = Class.new do
     end
     catch(:IRB_EXIT) do
       irb.eval_input
+    end
+  end
+
+  def auto(options = nil)
+    load_order = Binding.repl.automatic_load_order
+    load_order.each.with_index do |repl, index|
+      begin
+        public_send(repl, options)
+      rescue NoMethodError, LoadError => e
+        if index+1 == load_order.size
+          raise LoadError, "no ruby consoles found (looked for #{load_order.join(", ")})"
+        end
+      else
+        return true # we found a REPL, quit.
+      end
     end
   end
 
