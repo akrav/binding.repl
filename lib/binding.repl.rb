@@ -24,9 +24,7 @@ klass = Class.new do
       irb:  [-> { defined?(IRB) }  , method(:invoke_irb).to_proc  ],
       pry:  [-> { defined?(Pry) }  , method(:invoke_pry).to_proc  ]
     }
-    @lookup.default_proc = proc do |h,k|
-      h[k] = [proc { true }, proc {:'binding.repl.load_error'}]
-    end
+    @lookup.default = [proc { true }, proc {:'binding.repl.unknown_console'}]
   end
 
   def pry(options = {})
@@ -45,11 +43,12 @@ klass = Class.new do
   end
 
   def auto
-    Binding.repl.auto_load_order.each do |console|
+    load_order = Binding.repl.auto_load_order
+    load_order.each do |console|
       exit_value = invoke_console(console.to_sym, nil)
       return exit_value unless error?(exit_value)
     end
-    raise LoadError, "failed to load consoles: #{Binding.repl.auto_load_order.join(", ")}", []
+    raise LoadError, "failed to load consoles: #{load_order.join(", ")}", []
   end
 
 private
