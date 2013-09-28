@@ -29,17 +29,24 @@ consoles (if I missed one, open an issue or send an e-note :)).
 __EXAMPLES__
 
 ```ruby
-class Foo
-  binding.repl.pry   # invoke pry in context of "Foo"
-  binding.repl.ripl  # invoke ripl in context of "Foo"
-  binding.repl.irb   # invoke irb in context of "Foo"
-end
-
 class BlogsController < ApplicationController
   def show
     @blog = Blog.find(params[:id])
+    # invoke pry,irb, or ripl in the context of the 'show' method.
     binding.repl.{pry,irb,ripl}
   end
+end
+
+class Bar
+  # auto discover the first available console.
+  # default order is: ripl, pry, or irb.
+  binding.repl.auto
+
+  # change default load order
+  Binding.repl.auto_load_order = %w(pry ripl irb)
+
+  # remove "irb" from auto discovery
+  Binding.repl.auto_load_order -= ["irb"]
 end
 ```
 
@@ -49,7 +56,7 @@ _CAVAETS_
 
 Ripl and Pry can be customized by passing a set of key-value pairs but
 IRB cannot. ripl can be invoked with options that are forwarded to
-`Ripl.start(…)`:  
+`Ripl.start(…)`:
 
 ```ruby
 class Foo
@@ -72,9 +79,9 @@ via an issue or pull request/e-note.
 
 _DEPENDENCIES_
 
-binding.repl doesn't depend on anything. it's up to you to meet the 
-dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}` 
-will try to load the appropiate console for you if it looks like it 
+binding.repl doesn't depend on anything. it's up to you to meet the
+dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}`
+will try to load the appropiate console for you if it looks like it
 hasn't been loaded yet.
 
 __INSTALL__
@@ -87,10 +94,10 @@ gem install binding.repl
 
 __CREDIT__
 
-- [banisterfiend](https://github.com/banister) (John Mair)  
+- [banisterfiend](https://github.com/banister) (John Mair)
   for pry
 
-- [Kyrylo](https://github.com/kyrylo) (Kyrylo Silin)  
+- [Kyrylo](https://github.com/kyrylo) (Kyrylo Silin)
   for his hard work on pry.
 
 Rest of the Pry team(!!):
