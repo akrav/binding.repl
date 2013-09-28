@@ -45,7 +45,7 @@ klass = Class.new do
   def auto
     load_order = Binding.repl.auto_load_order
     load_order.each do |console|
-      exit_value = invoke_console(console.to_sym, nil)
+      exit_value = invoke_console(console.to_sym, {})
       return exit_value unless error?(exit_value)
     end
     raise LoadError, "failed to load consoles: #{load_order.join(", ")}", []
@@ -82,7 +82,7 @@ private
   end
 
   def invoke_ripl(binding, options = {})
-    Ripl.start :binding => binding
+    Ripl.start options.merge(binding: binding)
   end
 
   def invoke_irb(binding, options = {})
