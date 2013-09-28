@@ -8,7 +8,7 @@
 __DESCRIPTION__
 
 __binding.repl__ can start a number of different ruby consoles at runtime.
-IRB, ripl, and Pry(of course!) can be invoked at runtime in any context
+IRB, ripl, and pry(of course!) can be invoked at runtime in any context
 that an instance of `Binding` closes over.
 
 I owe all credit to John Mair([banisterfiend](https://github.com/banister)),
@@ -52,11 +52,13 @@ end
 
 __NOTES__
 
-_CAVAETS_
+_CONFIGURATION_
 
-Ripl and Pry can be customized by passing a set of key-value pairs but
-IRB cannot. ripl can be invoked with options that are forwarded to
-`Ripl.start(…)`:
+ripl and pry can be customized by passing a set of key-value pairs but
+IRB isn't as straight forward to configure and I haven't implemented
+any customization options for it yet.
+
+ripl can be invoked with options that are forwarded to `Ripl.start(…)`:
 
 ```ruby
 class Foo
@@ -64,13 +66,15 @@ class Foo
 end
 ```
 
-Pry can be configured in the same way. options are forwarded to `Pry.start(…)`:
+pry can be configured in the same way. options are forwarded to `Pry.start(…)`:
 
 ```ruby
 class Foo
   binding.repl.pry quiet: true
 end
 ```
+
+_RIPL & IRB_
 
 I have only used Ripl once(to write this library) and I don't use IRB
 much anymore. If I can improve support for either please let me know
