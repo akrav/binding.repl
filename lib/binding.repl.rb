@@ -57,7 +57,7 @@ klass = Class.new do
     exit_value = :'binding.repl.undefined'
     consoles.detect do |console|
       exit_value = auto_require(console)
-      exit_value != :'binding.repl.load_error'
+      ERR_TYPES.exclude?(exit_value)
     end
     if ERR_TYPES.include?(exit_value)
       raise LoadError, "no ruby consoles found (looked for #{consoles.join(", ")})"
