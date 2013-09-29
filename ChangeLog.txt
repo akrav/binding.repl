@@ -1,3 +1,7 @@
+== v0.5.0.1
+   - documentation fix
+   error in documentation
+
 == v0.5.0
    - disable {$HOME,$CWD}/.binding.repl.rc loading
    set ENV["BINDING_REPL_RC"] = 0 to disable load.
