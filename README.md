@@ -92,7 +92,7 @@ let's say amy prefers IRB, so her `$HOME/.binding.repl.rc` would look like this:
 let's say rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
 ```ruby
 {
-  "auto_load_order": ["irb", "pry", "ripl"]
+  "auto_load_order": ["pry", "ripl", "irb"]
 }
 ```
 
