@@ -33,13 +33,12 @@ __EXAMPLES__
 class BlogsController < ApplicationController
   def show
     @blog = Blog.find(params[:id])
-    # starts pry, irb, or ripl in the context of 'BlogsController#show'.
     binding.repl.{pry,irb,ripl}
   end
 end
 
 class Bar
-  # auto discover the first available console.
+  # auto discover and start the first available console.
   # default order is: ripl, pry, or irb.
   binding.repl.auto
 
@@ -75,6 +74,13 @@ class Foo
 end
 ```
 
+_DEPENDENCIES_
+
+binding.repl doesn't depend on anything. it's up to you to meet the
+dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}`
+will try to load the appropiate console for you if it looks like it
+hasn't been loaded yet.
+
 _WORKING WITH TEAMS_
 
 people working in teams might have different choices for what ruby
@@ -107,20 +113,6 @@ class Foo
   binding.repl.auto
 end
 ```
-
-_RIPL & IRB_
-
-I have only used Ripl once(to write this library) and I don't use IRB
-much anymore. If I can improve support for either please let me know
-via an issue or pull request/e-note.
-
-
-_DEPENDENCIES_
-
-binding.repl doesn't depend on anything. it's up to you to meet the
-dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}`
-will try to load the appropiate console for you if it looks like it
-hasn't been loaded yet.
 
 __INSTALL__
 

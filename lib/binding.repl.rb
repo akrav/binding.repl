@@ -85,9 +85,9 @@ Binding.class_eval do
   include klass::BindingMixin
   repl.auto_load_order = %w(ripl pry irb)
 end
-require_relative "binding.repl/pry"
-require_relative "binding.repl/irb"
-require_relative "binding.repl/ripl"
+require_relative "binding.repl/console/pry"
+require_relative "binding.repl/console/irb"
+require_relative "binding.repl/console/ripl"
 
 if ENV["BINDING_REPL_RC"].to_i != 0
   require_relative "binding.repl/rc"
