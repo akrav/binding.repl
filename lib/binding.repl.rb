@@ -88,3 +88,14 @@ end
 require_relative "binding.repl/pry"
 require_relative "binding.repl/irb"
 require_relative "binding.repl/ripl"
+
+home_rc = File.join ENV["HOME"], ".binding.repl.rc"
+local_rc = File.join Dir.getwd, ".binding.repl.rc"
+
+if File.exists?(home_rc)
+  load(home_rc)
+else
+  if File.exists?(local_rc)
+    load(local_rc)
+  end
+end

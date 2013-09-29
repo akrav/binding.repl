@@ -33,7 +33,7 @@ __EXAMPLES__
 class BlogsController < ApplicationController
   def show
     @blog = Blog.find(params[:id])
-    # invoke pry,irb, or ripl in the context of the 'show' method.
+    # starts pry, irb, or ripl in the context of 'BlogsController#show'.
     binding.repl.{pry,irb,ripl}
   end
 end
@@ -72,6 +72,38 @@ pry can be configured in the same way. options are forwarded to `Pry.start(…)`
 ```ruby
 class Foo
   binding.repl.pry quiet: true
+end
+```
+
+_WORKING WITH TEAMS_
+
+people working in teams might have different choices for what ruby
+console they like to use and __binding.repl__ tries to accomondate by
+reading a `.binding.repl.rc` file from $HOME or the current working
+directory. It's a plain ruby file but you can use it configure
+__binding.repl__.
+
+amy prefers IRB, so her `.binding.repl.rc` would look like this:
+```ruby
+# $HOME/.binding.repl.rc
+Binding.repl.auto_load_order = %w(irb pry ripl)
+```
+
+rob prefers pry, so his `.binding.repl.rc` would look like this:
+```ruby
+# $HOME/.binding.repl.rc
+Binding.repl.auto_load_order = %w(pry irb ripl)
+```
+
+when either rob or amy wants to start their favorite ruby console
+they can use `binding.repl.auto`:
+
+```ruby
+# lib/foo.rb
+class Foo
+  # starts "irb" in the context of Foo for amy.
+  # starts "pry" in the context of Foo for rob.
+  binding.repl.auto
 end
 ```
 
