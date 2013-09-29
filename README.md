@@ -2,6 +2,7 @@
 |:----------------|:--------------------------------------------------
 | Homepage        | https://github.com/robgleeson/binding.repl
 | Documentation   | http://rubydoc.info/github/robgleeson/binding.repl
+| Code Metrics    | [![Code Climate](https://codeclimate.com/github/robgleeson/binding.repl.png)](https://codeclimate.com/github/robgleeson/binding.repl)
 | CI              | [![Build Status](https://travis-ci.org/robgleeson/ichannel.binding.repl.png)](https://travis-ci.org/robgleeson/binding.repl)
 | Author          | Robert Gleeson
 
