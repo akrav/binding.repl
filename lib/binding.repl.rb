@@ -90,5 +90,5 @@ require_relative "binding.repl/irb"
 require_relative "binding.repl/ripl"
 
 if ENV["BINDING_REPL_RC"].to_i != 0
-  reuqire_relative "binding.repl/rc"
+  require_relative "binding.repl/rc"
 end

@@ -1,3 +1,7 @@
+== v0.5.0
+   - disable {$HOME,$CWD}/.binding.repl.rc loading
+   set ENV["BINDING_REPL_RC"] = 0 to disable load.
+
 == v0.4.1
    - read {$HOME,$CWD}/.binding.repl.rc as JSON
    safer.
