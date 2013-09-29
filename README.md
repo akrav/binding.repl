@@ -82,14 +82,14 @@ console they like to use and __binding.repl__ tries to accomondate by
 reading a `.binding.repl.rc` file from $HOME or the current working
 directory. It's a JSON file with a single key-value pair.
 
-amy prefers IRB, so her `$HOME/.binding.repl.rc` would look like this:
+let's say amy prefers IRB, so her `$HOME/.binding.repl.rc` would look like this:
 ```javascript
 {
   "auto_load_order": ["irb", "pry", "ripl"]
 }
 ```
 
-rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
+let's say rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
 ```ruby
 {
   "auto_load_order": ["irb", "pry", "ripl"]
@@ -100,7 +100,6 @@ when either rob or amy wants to start their favorite ruby console
 they can use `binding.repl.auto`:
 
 ```ruby
-# lib/foo.rb
 class Foo
   # starts "irb" in the context of Foo for amy.
   # starts "pry" in the context of Foo for rob.
