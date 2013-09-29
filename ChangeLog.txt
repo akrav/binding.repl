@@ -1,3 +1,7 @@
+== v0.4.1
+   - read {$HOME,$CWD}/.binding.repl.rc as JSON
+   safer.
+
 == v0.4.0
    - read {$HOME,$CWD}/.binding.ripl.rc on load
    see README for docs.

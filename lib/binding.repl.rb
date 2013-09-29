@@ -91,11 +91,17 @@ require_relative "binding.repl/ripl"
 
 home_rc = File.join ENV["HOME"], ".binding.repl.rc"
 local_rc = File.join Dir.getwd, ".binding.repl.rc"
-
+require "json"
 if File.exists?(home_rc)
-  load(home_rc)
-else
-  if File.exists?(local_rc)
-    load(local_rc)
-  end
+  json = File.read(home_rc)
+end
+if !File.exists?(home_rc) && File.exists?(local_rc)
+  json = File.read(local_rc)
+end
+
+if local_rc || home_rc
+  options = JSON.parse(json) rescue nil
+end
+if options
+  Binding.repl.auto_load_order = options["auto_load_order"]
 end
