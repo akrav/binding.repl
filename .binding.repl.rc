@@ -1,0 +1,20 @@
+# start pry on binding.repl.auto
+# Binding.repl.auto_load_order = %w(pry)
+
+# start irb on binding.repl.auto
+# Binding.repl.auto_load_order = %w(irb)
+
+# start ripl, if it cannot be loaded, start pry
+# Binding.repl.auto_load_order = %w(ripl pry)
+
+=begin
+class Person
+  def initialize(name)
+    @name = name
+  end
+
+  def greet
+    binding.repl.auto
+  end
+end
+=end
