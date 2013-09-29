@@ -10,7 +10,7 @@ else
   end
 end
 
-if local_rc || home_rc
+if json
   options = JSON.parse(json) rescue nil
 end
 if options
