@@ -107,7 +107,7 @@ __CREDIT__
 Rest of the Pry team(!!):
 
 - [cirwin](https://github.com/conradirwin), Conrad Irwin.
-- [ryanf](https://github.com/ryanf), Ryan Fitzgerald.
+- [ryanf](https://github.com/rf-), Ryan Fitzgerald.
 - [rking](https://github.com/rking), "rking", on adventures outside programming now.
 
 __LICENSE__
