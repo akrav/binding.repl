@@ -1,3 +1,7 @@
+== v0.4.0
+   - read {$HOME,$CWD}/.binding.ripl.rc on load
+   see README for docs.
+
 == v0.3.0
    - add Binding.repl.add
    add a ruby console to binding.repl
