@@ -80,16 +80,17 @@ _WORKING WITH TEAMS_
 people working in teams might have different choices for what ruby
 console they like to use and __binding.repl__ tries to accomondate by
 reading a `.binding.repl.rc` file from $HOME or the current working
-directory. It's a JSON file with a single key-value pair.
+directory. It's a very simple JSON file.
 
-let's say amy prefers IRB, so her `$HOME/.binding.repl.rc` would look like this:
+let's say rob & amy are working on some code together. amy prefers
+IRB, so her `$HOME/.binding.repl.rc` would look like this:
 ```javascript
 {
   "auto_load_order": ["irb", "pry", "ripl"]
 }
 ```
 
-let's say rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
+rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
 ```ruby
 {
   "auto_load_order": ["pry", "ripl", "irb"]
