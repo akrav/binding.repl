@@ -18,7 +18,7 @@ class BindingRepl
   end
 
   def self.version
-    "0.5.0.1"
+    "0.5.1"
   end
 
   def self.add(console, predicate, runner)
@@ -89,6 +89,6 @@ require_relative "binding.repl/console/pry"
 require_relative "binding.repl/console/irb"
 require_relative "binding.repl/console/ripl"
 
-if ENV["BINDING_REPL_RC"].to_i != 0
+if ENV["BINDING_REPL_RC"] != "0"
   require_relative "binding.repl/rc"
 end

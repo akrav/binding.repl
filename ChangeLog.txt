@@ -1,3 +1,12 @@
+== v0.5.1
+   - $CWD/.binding.repl.rc has precendence over $HOME/.binding.repl.rc
+   stupid mistake. $CWD/.binding.repl.rc should be loaded instead of
+   $HOME/.binding.repl.rc if it exists.
+
+   - compare ENV["BINDING_REPL_RC"] as a string.
+   casting with to_i on nil(the default) returns 0.
+   file was never loaded.
+
 == v0.5.0.1
    - documentation fix
    error in documentation

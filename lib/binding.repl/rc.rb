@@ -2,11 +2,12 @@ require "json"
 home_rc = File.join ENV["HOME"], ".binding.repl.rc"
 local_rc = File.join Dir.getwd, ".binding.repl.rc"
 
-if File.exists?(home_rc)
-  json = File.read(home_rc)
-end
-if !File.exists?(home_rc) && File.exists?(local_rc)
+if File.exists?(local_rc)
   json = File.read(local_rc)
+else
+  if File.exists?(home_rc)
+    json = File.read(home_rc)
+  end
 end
 
 if local_rc || home_rc
