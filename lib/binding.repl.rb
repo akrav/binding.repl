@@ -18,7 +18,20 @@ class BindingRepl
   end
 
   def self.version
-    "0.5.1"
+    "0.6.0"
+  end
+
+  def self.disabled?
+    @disabled
+  end
+
+  def self.enable!
+    @disabled = false
+    !@disabled
+  end
+
+  def self.disable!
+    @disabled = true
   end
 
   def self.add(console, predicate, runner)
@@ -44,11 +57,14 @@ class BindingRepl
 
   def auto
     load_order = Binding.repl.auto_load_order
+    exit_value = nil
     load_order.each do |console|
       exit_value = invoke_console(console.to_sym, {})
       return exit_value unless invoke_failed?(exit_value)
     end
-    raise LoadError, "failed to load consoles: #{load_order.join(", ")}", []
+    if invoke_failed?(exit_value)
+      raise LoadError, "failed to load consoles: #{load_order.join(", ")}", []
+    end
   end
 
 private
@@ -57,10 +73,14 @@ private
   end
 
   def invoke_failed?(exit_value)
-    exit_value.to_s.start_with? "binding.repl"
+    exit_value = exit_value.to_s
+    exit_value.start_with?("binding.repl") && exit_value != 'binding.repl.disabled'
   end
 
   def invoke_console(console, options)
+    if Binding.repl.disabled?
+      return :'binding.repl.disabled'
+    end
     require_predicate, runner = @lookup[console]
     require_console(console, require_predicate)
     runner.call(@binding, options)

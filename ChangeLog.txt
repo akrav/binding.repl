@@ -1,3 +1,8 @@
+== v0.6.0
+   - add Binding.repl.{disable!,enable!}.
+   turn binding.repl.{pry,irb,ripl,auto} into a no-op.
+   closes #8.
+
 == v0.5.1
    - $CWD/.binding.repl.rc has precendence over $HOME/.binding.repl.rc
    stupid mistake. $CWD/.binding.repl.rc should be loaded instead of
@@ -13,15 +18,15 @@
 
 == v0.5.0
    - disable {$HOME,$CWD}/.binding.repl.rc loading
-   set ENV["BINDING_REPL_RC"] = 0 to disable load.
+   set ENV["BINDING_REPL_RC"] = "0" to disable load.
 
 == v0.4.1
    - read {$HOME,$CWD}/.binding.repl.rc as JSON
-   safer.
+   less security concerns than parsing ruby.
 
 == v0.4.0
    - read {$HOME,$CWD}/.binding.ripl.rc on load
-   see README for docs.
+   see README for documentation.
 
 == v0.3.0
    - add Binding.repl.add

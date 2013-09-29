@@ -48,6 +48,20 @@ class Bar
   # remove "irb" from auto discovery
   Binding.repl.auto_load_order -= ["irb"]
 end
+
+class Baz
+  # invoke irb
+  binding.repl.irb
+  Binding.repl.disable!
+
+  # no-op, returns :'binding.repl.disabled' and continues execution.
+  binding.repl.irb
+  binding.repl.ripl
+
+  # invoke pry
+  Binding.repl.enable!
+  binding.repl.pry
+end
 ```
 
 __NOTES__
