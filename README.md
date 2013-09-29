@@ -88,13 +88,6 @@ class Foo
 end
 ```
 
-_DEPENDENCIES_
-
-binding.repl doesn't depend on anything. it's up to you to meet the
-dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}`
-will try to load the appropiate console for you if it looks like it
-hasn't been loaded yet.
-
 _WORKING WITH TEAMS_
 
 people working in teams might have different choices for what ruby
@@ -103,17 +96,17 @@ reading a `.binding.repl.rc` file from $HOME or the current working
 directory. It's a very simple JSON file.
 
 let's say rob & amy are working on some code together. amy prefers
-IRB, so her `$HOME/.binding.repl.rc` would look like this:
+ripl, so her `$HOME/.binding.repl.rc` would look like this:
 ```javascript
 {
-  "auto_load_order": ["irb", "pry", "ripl"]
+  "auto_load_order": ["ripl", "irb"]
 }
 ```
 
 rob prefers pry, so his `$HOME/.binding.repl.rc` would look like this:
 ```ruby
 {
-  "auto_load_order": ["pry", "ripl", "irb"]
+  "auto_load_order": ["pry", "irb"]
 }
 ```
 
@@ -122,11 +115,18 @@ they can use `binding.repl.auto`:
 
 ```ruby
 class Foo
-  # starts "irb" in the context of Foo for amy.
-  # starts "pry" in the context of Foo for rob.
+  # starts "irb" in the context of Foo for amy. fall back console is "irb".
+  # starts "pry" in the context of Foo for rob. fall back console is "irb".
   binding.repl.auto
 end
 ```
+
+_DEPENDENCIES_
+
+binding.repl doesn't depend on anything. it's up to you to meet the
+dependencies(pry, irb, and/or ripl). `binding.repl.{ripl,pry,irb}`
+will try to load the appropiate console for you if it looks like it
+hasn't been loaded yet.
 
 __INSTALL__
 
