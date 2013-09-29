@@ -25,7 +25,7 @@ class BindingRepl
     LOOKUP[console] = [predicate, runner]
     define_method(console) do |options = {}|
       exit_value = invoke_console(console, options)
-      error?(exit_value) ? fail!(console) : exit_value
+      invoke_failed?(exit_value) ? fail!(console) : exit_value
     end
   end
 
@@ -46,7 +46,7 @@ class BindingRepl
     load_order = Binding.repl.auto_load_order
     load_order.each do |console|
       exit_value = invoke_console(console.to_sym, {})
-      return exit_value unless error?(exit_value)
+      return exit_value unless invoke_failed?(exit_value)
     end
     raise LoadError, "failed to load consoles: #{load_order.join(", ")}", []
   end
@@ -56,7 +56,7 @@ private
     raise LoadError, "the console '#{console}' could not be loaded. is #{console} installed?", []
   end
 
-  def error?(exit_value)
+  def invoke_failed?(exit_value)
     exit_value.to_s.start_with? "binding.repl"
   end
 
