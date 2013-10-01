@@ -29,6 +29,8 @@ consoles (if I missed one, open an issue or send an e-note :)).
 
 __EXAMPLES__
 
+_Rails_
+
 ```ruby
 class BlogsController < ApplicationController
   def show
@@ -36,7 +38,11 @@ class BlogsController < ApplicationController
     binding.repl.{pry,irb,ripl}
   end
 end
+```
 
+_Auto discovery_
+
+```ruby
 class Bar
   # auto discover and start the first available console.
   # default order is: ripl, pry, or irb.
@@ -48,7 +54,11 @@ class Bar
   # remove "irb" from auto discovery
   Binding.repl.auto_load_order -= ["irb"]
 end
+```
 
+_Enable/disable at runtime_
+
+```ruby
 class Baz
   # invoke irb
   binding.repl.irb
