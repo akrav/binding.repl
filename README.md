@@ -121,6 +121,19 @@ class Foo
 end
 ```
 
+_SHELL ENVIRONMENT VARIABLES_
+
+binding.repl can be configured with a couple of shell environment variables.
+
+```bash
+# disable trying to read $HOME/.binding.repl.rc
+export BINDING_REPL_RC=0
+
+# set the 'auto' load order
+# takes precendence over $HOME/.binding.repl.rc when set
+export BINDING_REPL_ORDER=pry,irb
+```
+
 _DEPENDENCIES_
 
 binding.repl doesn't depend on anything. it's up to you to meet the
