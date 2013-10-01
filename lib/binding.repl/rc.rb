@@ -5,12 +5,13 @@ module Binding.repl::RC
   end
 
   def safe_load
-    rc = JSON.parse File.read(home_rc) if File.exists?(home_rc)
+    if File.readable?(home_rc)
+      blob = File.read(home_rc)
+      rc = JSON.parse File.read(home_rc)
+      Binding.repl.auto_load_order = rc["auto_load_order"]
+    end
   rescue StandardError => e
     warn "binding.repl: '#{home_rc}' read failed (#{e.class}): #{e.message}"
-  else
-    load_order = rc["auto_load_order"]
-    Binding.repl.auto_load_order = load_order
   end
 end
 
