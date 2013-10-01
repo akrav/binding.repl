@@ -13,7 +13,6 @@ end
 home_rc = File.join ENV["HOME"], ".binding.repl.rc"
 if File.exists?(home_rc)
   Binding.repl::Tryable.try do
-    blob = File.read home_rc
-    options = JSON.parse(blob)
+    JSON.parse File.read(home_rc)
   end
 end
