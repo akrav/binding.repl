@@ -1,18 +1,19 @@
 require "json"
 module Binding.repl::RC
+  module_function
   def safe_load
-    rc = yield
+    rc = JSON.parse File.read(home_rc)
   rescue StandardError => e
-    warn "error reading JSON file $HOME/.binding.repl.rc (#{e.class}: #{e.message})"
+    warn "error reading JSON file '#{home_rc}' (#{e.class}: #{e.message})"
   else
-    Binding.repl.auto_load_order = rc["auto_load_order"]
+    load_order = rc["auto_load_order"]
+    Binding.repl.auto_load_order = load_order
   end
-  module_function :safe_load
-end
 
-home_rc = File.join ENV["HOME"], ".binding.repl.rc"
-if File.exists?(home_rc)
-  Binding.repl::RC.safe_load do
-    JSON.parse File.read(home_rc)
+  def home_rc
+    File.join ENV["HOME"], ".binding.repl.rc"
   end
+end
+if File.exists?(home_rc)
+  Binding.repl::RC.safe_load
 end
