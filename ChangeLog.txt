@@ -1,3 +1,8 @@
+== HEAD
+   - read shell env var $BINDING_REPL_ORDER
+   set of $BINDING_REPL_ORDER stops the .binding.repl.rc file from
+   being loaded and takes precendence. closes #9.
+
 == v0.6.0
    - add Binding.repl.{disable!,enable!}.
    turn binding.repl.{pry,irb,ripl,auto} into a no-op.

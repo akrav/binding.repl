@@ -109,6 +109,9 @@ require_relative "binding.repl/console/pry"
 require_relative "binding.repl/console/irb"
 require_relative "binding.repl/console/ripl"
 
-if ENV["BINDING_REPL_RC"] != "0"
+if ENV["BINDING_REPL_ORDER"].nil? && ENV["BINDING_REPL_RC"] != "0"
   require_relative "binding.repl/rc"
+end
+if ENV.has_key?("BINDING_REPL_ORDER")
+  Binding.repl.auto_load_order = ENV["BINDING_REPL_ORDER"].split /[:,]/
 end
