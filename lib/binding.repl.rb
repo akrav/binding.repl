@@ -92,8 +92,6 @@ private
     already_required = predicate.call
     if !already_required
       require(console.to_s)
-      # IRB hack.
-      IRB.setup(nil) if console == :irb
     end
   end
 end
