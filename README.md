@@ -35,7 +35,7 @@ _Rails_
 class BlogsController < ApplicationController
   def show
     @blog = Blog.find(params[:id])
-    binding.repl.{pry,irb,ripl}
+    binding.repl.{pry,irb,ripl,auto}
   end
 end
 ```
