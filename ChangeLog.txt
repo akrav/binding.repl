@@ -1,4 +1,11 @@
 == HEAD
+   - catch JSON parse errors when reading .binding.repl.rc
+   closes #7
+
+   - no longer read from project-local .binding.repl.rc file
+   the $BINDING_REPL_ORDER environment variable can be set if you
+   want to override the settings defined by $HOME/.binding.repl.rc
+
    - read shell env var $BINDING_REPL_ORDER
    set of $BINDING_REPL_ORDER stops the .binding.repl.rc file from
    being loaded and takes precendence. closes #9.

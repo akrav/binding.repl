@@ -1,18 +1,19 @@
 require "json"
-home_rc = File.join ENV["HOME"], ".binding.repl.rc"
-local_rc = File.join Dir.getwd, ".binding.repl.rc"
-
-if File.exists?(local_rc)
-  json = File.read(local_rc)
-else
-  if File.exists?(home_rc)
-    json = File.read(home_rc)
+module Binding.repl::Tryable
+  def try
+    rc = yield
+  rescue StandardError => e
+    warn "error reading JSON file $HOME/.binding.repl.rc (#{e.class}: #{e.message})"
+  else
+    Binding.repl.auto_load_order = rc["auto_load_order"]
   end
+  module_function :try
 end
 
-if json
-  options = JSON.parse(json) rescue nil
-end
-if options
-  Binding.repl.auto_load_order = options["auto_load_order"]
+home_rc = File.join ENV["HOME"], ".binding.repl.rc"
+if File.exists?(home_rc)
+  Binding.repl::Tryable.try do
+    blob = File.read home_rc
+    options = JSON.parse(blob)
+  end
 end

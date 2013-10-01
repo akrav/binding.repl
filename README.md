@@ -92,8 +92,8 @@ _WORKING WITH TEAMS_
 
 people working in teams might have different choices for what ruby
 console they like to use and __binding.repl__ tries to accomondate by
-reading a `.binding.repl.rc` file from $HOME or the current working
-directory. It's a very simple JSON file.
+reading a `.binding.repl.rc` file from $HOME or by setting a shell
+environment variable. `binding.repl.rc` is a simple JSON file.
 
 let's say rob & amy are working on some code together. amy prefers
 ripl, so her `$HOME/.binding.repl.rc` would look like this:
