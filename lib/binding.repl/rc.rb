@@ -1,4 +1,3 @@
-require "json"
 module Binding.repl::RC
   module_function
   def home_rc
@@ -14,4 +13,11 @@ module Binding.repl::RC
     Binding.repl.auto_load_order = load_order
   end
 end
-Binding.repl::RC.safe_load
+
+if ENV["BINDING_REPL_ORDER"].nil? && ENV["BINDING_REPL_RC"] != "0"
+  require "json"
+  Binding.repl::RC.safe_load
+end
+if ENV.has_key?("BINDING_REPL_ORDER")
+  Binding.repl.auto_load_order = ENV["BINDING_REPL_ORDER"].split /[:,]/
+end

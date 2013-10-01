@@ -56,8 +56,7 @@ class BindingRepl
   end
 
   def auto
-    load_order = Binding.repl.auto_load_order
-    exit_value = nil
+    load_order, exit_value = Binding.repl.auto_load_order, nil
     load_order.each do |console|
       exit_value = invoke_console(console.to_sym, {})
       return exit_value unless invoke_failed?(exit_value)
@@ -106,10 +105,4 @@ end
 require_relative "binding.repl/console/pry"
 require_relative "binding.repl/console/irb"
 require_relative "binding.repl/console/ripl"
-
-if ENV["BINDING_REPL_ORDER"].nil? && ENV["BINDING_REPL_RC"] != "0"
-  require_relative "binding.repl/rc"
-end
-if ENV.has_key?("BINDING_REPL_ORDER")
-  Binding.repl.auto_load_order = ENV["BINDING_REPL_ORDER"].split /[:,]/
-end
+require_relative "binding.repl/rc"
