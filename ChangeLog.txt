@@ -1,4 +1,4 @@
-== HEAD
+== v0.7.0
    - catch JSON parse errors when reading .binding.repl.rc
    closes #7
 
